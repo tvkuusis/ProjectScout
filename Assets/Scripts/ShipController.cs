@@ -125,8 +125,6 @@ public class ShipController : MonoBehaviour
                         _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
                         _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
                         Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
-
-
                     }
                 }
             }
@@ -140,18 +138,6 @@ public class ShipController : MonoBehaviour
         if(_rb)
         {
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)_rb.velocity);
-        }
-    }
-
-    private void Kakkakikkare()
-    {
-        int i = 1;
-        int j = ++i;
-        Debug.Log("i, j: " + i + "," + j);
-
-        for(int i = 0; i < 10; i++)
-        {
-
         }
     }
 }

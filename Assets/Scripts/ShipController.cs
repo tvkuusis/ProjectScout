@@ -16,7 +16,7 @@ public class ShipController : MonoBehaviour
 
     [SerializeField]
     bool _leftEngineOn;
-    [SerializeField] 
+    [SerializeField]
     bool _rightEngineOn;
 
     Rigidbody2D _rb;
@@ -31,7 +31,7 @@ public class ShipController : MonoBehaviour
     }
 
     void Update()
-    {    
+    {
         if(Input.GetKeyDown(KeyCode.R))
         {
             Reset();
@@ -69,74 +69,67 @@ public class ShipController : MonoBehaviour
                 ToggleLeftEngine(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
                 ToggleRightEngine(true);
             }
-            else if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
+            else if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
             {
                 ToggleRightEngine(false);
             }
 
-
             if(classicControls)
             {
 
-                if (_leftEngineOn)
+                if(_leftEngineOn)
                 {
-                    if (_rb.angularVelocity > -maxAngularVelocity)
+                    if(_rb.angularVelocity > -maxAngularVelocity)
                     {
                         _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
                         Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
                     }
                 }
 
-                if (_rightEngineOn)
+                if(_rightEngineOn)
                 {
-                    if (_rb.angularVelocity < maxAngularVelocity)
+                    if(_rb.angularVelocity < maxAngularVelocity)
                     {
                         _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
                         Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce, Color.green);
                     }
                 }
-
-
-            } else //Non-classic controls. L+R combo press produces less combined thrust, making single-L or single-R button press rotate ship faster (but more difficult to handle)
-            {
-
-
-                if (_leftEngineOn && !_rightEngineOn)
-            {
-                if(_rb.angularVelocity > -maxAngularVelocity)
-                {
-                    _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
-                    Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.red);
-                }
             }
-            
-            if(_rightEngineOn && !_leftEngineOn)
+            else //Non-classic controls. L+R combo press produces less combined thrust, making single-L or single-R button press rotate ship faster (but more difficult to handle)
             {
-                if( _rb.angularVelocity < maxAngularVelocity)
+                if(_leftEngineOn && !_rightEngineOn)
                 {
-                    _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
-                    Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.green);
+                    if(_rb.angularVelocity > -maxAngularVelocity)
+                    {
+                        _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                        Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.red);
+                    }
                 }
-            }
 
-
-            if (_leftEngineOn && _rightEngineOn)
-            {
-                if (_rb.velocity.sqrMagnitude < maxVelocity)
+                if(_rightEngineOn && !_leftEngineOn)
                 {
-                    _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
-                    _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
-                    Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
-
-                    
+                    if(_rb.angularVelocity < maxAngularVelocity)
+                    {
+                        _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
+                        Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.green);
+                    }
                 }
-            }
+
+                if(_leftEngineOn && _rightEngineOn)
+                {
+                    if(_rb.velocity.sqrMagnitude < maxVelocity)
+                    {
+                        _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                        _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
+                        Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
 
 
+                    }
+                }
             }
 
             yield return null;

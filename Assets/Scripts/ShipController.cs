@@ -80,7 +80,6 @@ public class ShipController : MonoBehaviour
 
             if(classicControls)
             {
-
                 if(_leftEngineOn)
                 {
                     if(_rb.angularVelocity > -maxAngularVelocity)

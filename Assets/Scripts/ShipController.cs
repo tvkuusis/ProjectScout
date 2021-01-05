@@ -5,7 +5,11 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     public float engineForce = 5f;
+    [Tooltip("EXPERIMENTAL: for non-classic control that handles single thruster usage separately from L+R thruster combo")]
+    public float sideThrusterToMainThrusterRatio = 1;
     public float maxVelocity = 10f;
+    [Tooltip("EXPERIMENTAL: Non-classic control handles single thruster usage separately from L+R thruster combo")]
+    public bool classicControls = true;
     public float maxAngularVelocity = 10f;
     public Transform leftEngine;
     public Transform rightEngine;
@@ -33,18 +37,18 @@ public class ShipController : MonoBehaviour
             Reset();
         }
 
-        Debug.Log(_rb.velocity.sqrMagnitude + " " + _rb.angularVelocity);
+        Debug.Log("velocity: " + _rb.velocity.sqrMagnitude + " angularVelocity: " + _rb.angularVelocity);
     }
 
     public void ToggleLeftEngine(bool newState)
     {
-        Debug.LogError("Left engine " + newState);
+        //Debug.LogError("Left engine " + newState);
         _leftEngineOn = newState;
     }
 
     public void ToggleRightEngine(bool newState)
     {
-        Debug.LogError("Right engine " + newState);
+        //Debug.LogError("Right engine " + newState);
         _rightEngineOn = newState;
     }
 
@@ -69,32 +73,74 @@ public class ShipController : MonoBehaviour
                 ToggleLeftEngine(false);
             }
 
-            if(_leftEngineOn)
-            {
-                if(_rb.angularVelocity > -maxAngularVelocity /*&& _rb.velocity.sqrMagnitude < maxVelocity*/)
-                {
-                    _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
-                    Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
-                }
-            }
-     
-
-            if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
                 ToggleRightEngine(true);
             }
-            else if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
+            else if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
             {
                 ToggleRightEngine(false);
             }
 
-            if(_rightEngineOn)
+
+            if(classicControls)
             {
-                if(_rb.angularVelocity < maxAngularVelocity /*&& _rb.velocity.sqrMagnitude < maxVelocity*/)
+
+                if (_leftEngineOn)
+                {
+                    if (_rb.angularVelocity > -maxAngularVelocity)
+                    {
+                        _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                        Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
+                    }
+                }
+
+                if (_rightEngineOn)
+                {
+                    if (_rb.angularVelocity < maxAngularVelocity)
+                    {
+                        _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
+                        Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce, Color.green);
+                    }
+                }
+
+
+            } else //Non-classic controls. L+R combo press produces less combined thrust, making single-L or single-R button press rotate ship faster (but more difficult to handle)
+            {
+
+
+                if (_leftEngineOn && !_rightEngineOn)
+            {
+                if(_rb.angularVelocity > -maxAngularVelocity)
+                {
+                    _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                    Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.red);
+                }
+            }
+            
+            if(_rightEngineOn && !_leftEngineOn)
+            {
+                if( _rb.angularVelocity < maxAngularVelocity)
                 {
                     _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
-                    Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce, Color.green);
+                    Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.green);
                 }
+            }
+
+
+            if (_leftEngineOn && _rightEngineOn)
+            {
+                if (_rb.velocity.sqrMagnitude < maxVelocity)
+                {
+                    _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                    _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
+                    Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
+
+                    
+                }
+            }
+
+
             }
 
             yield return null;

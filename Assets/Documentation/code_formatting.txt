@@ -1,0 +1,29 @@
+
+public class SampleScript
+{
+	// Public variables first, private second
+	public static SampleScript Instance;
+	public float SampleFloat;
+	public float SampleFloat { get; private set; }
+
+	float _sampleFloat;
+	[SerializeField] // Use this if you want to see a private variable in editor instead of making it public
+	bool _isLocal;
+
+	public void PublicSampleMethod(bool newState)
+	{
+		if(newState == true)
+		{
+			// Do something
+		}
+		else
+		{
+			// Do something else
+		}
+	}
+
+	void PrivateSampleMethod()
+	{
+
+	}
+}

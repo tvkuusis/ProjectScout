@@ -36,19 +36,15 @@ public class ShipController : MonoBehaviour
         {
             Reset();
         }
-
-        Debug.Log("velocity: " + _rb.velocity.sqrMagnitude + " angularVelocity: " + _rb.angularVelocity);
     }
 
     public void ToggleLeftEngine(bool newState)
     {
-        //Debug.LogError("Left engine " + newState);
         _leftEngineOn = newState;
     }
 
     public void ToggleRightEngine(bool newState)
     {
-        //Debug.LogError("Right engine " + newState);
         _rightEngineOn = newState;
     }
 
@@ -149,6 +145,9 @@ public class ShipController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, transform.position + (Vector3)_rb.velocity);
+        if(_rb)
+        {
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3)_rb.velocity);
+        }
     }
 }

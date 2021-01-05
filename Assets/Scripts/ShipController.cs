@@ -13,18 +13,17 @@ public class ShipController : MonoBehaviour
     public float maxAngularVelocity = 10f;
     public Transform leftEngine;
     public Transform rightEngine;
+    public Rigidbody2D RigidBody { get; private set; }
 
     [SerializeField]
     bool _leftEngineOn;
     [SerializeField]
     bool _rightEngineOn;
-
-    Rigidbody2D _rb;
     Vector2 _spawn;
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        RigidBody = GetComponent<Rigidbody2D>();
         _spawn = transform.position;
 
         StartCoroutine(EngineRoutine());
@@ -52,8 +51,8 @@ public class ShipController : MonoBehaviour
     {
         transform.position = _spawn;
         transform.rotation = Quaternion.identity;
-        _rb.velocity = Vector2.zero;
-        _rb.angularVelocity = 0;
+        RigidBody.velocity = Vector2.zero;
+        RigidBody.angularVelocity = 0;
     }
 
     IEnumerator EngineRoutine()
@@ -82,18 +81,18 @@ public class ShipController : MonoBehaviour
             {
                 if(_leftEngineOn)
                 {
-                    if(_rb.angularVelocity > -maxAngularVelocity)
+                    if(RigidBody.angularVelocity > -maxAngularVelocity)
                     {
-                        _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                        RigidBody.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
                         Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
                     }
                 }
 
                 if(_rightEngineOn)
                 {
-                    if(_rb.angularVelocity < maxAngularVelocity)
+                    if(RigidBody.angularVelocity < maxAngularVelocity)
                     {
-                        _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
+                        RigidBody.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
                         Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce, Color.green);
                     }
                 }
@@ -102,28 +101,28 @@ public class ShipController : MonoBehaviour
             {
                 if(_leftEngineOn && !_rightEngineOn)
                 {
-                    if(_rb.angularVelocity > -maxAngularVelocity)
+                    if(RigidBody.angularVelocity > -maxAngularVelocity)
                     {
-                        _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                        RigidBody.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
                         Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.red);
                     }
                 }
 
                 if(_rightEngineOn && !_leftEngineOn)
                 {
-                    if(_rb.angularVelocity < maxAngularVelocity)
+                    if(RigidBody.angularVelocity < maxAngularVelocity)
                     {
-                        _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
+                        RigidBody.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
                         Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * engineForce * sideThrusterToMainThrusterRatio, Color.green);
                     }
                 }
 
                 if(_leftEngineOn && _rightEngineOn)
                 {
-                    if(_rb.velocity.sqrMagnitude < maxVelocity)
+                    if(RigidBody.velocity.sqrMagnitude < maxVelocity)
                     {
-                        _rb.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
-                        _rb.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
+                        RigidBody.AddForceAtPosition(leftEngine.up * engineForce, leftEngine.position);
+                        RigidBody.AddForceAtPosition(rightEngine.up * engineForce, rightEngine.position);
                         Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * engineForce, Color.red);
                     }
                 }
@@ -135,9 +134,9 @@ public class ShipController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(_rb)
+        if(RigidBody)
         {
-            Gizmos.DrawLine(transform.position, transform.position + (Vector3)_rb.velocity);
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3)RigidBody.velocity);
         }
     }
 }

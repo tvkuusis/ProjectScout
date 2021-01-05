@@ -142,4 +142,16 @@ public class ShipController : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)_rb.velocity);
         }
     }
+
+    private void Kakkakikkare()
+    {
+        int i = 1;
+        int j = ++i;
+        Debug.Log("i, j: " + i + "," + j);
+
+        for(int i = 0; i < 10; i++)
+        {
+
+        }
+    }
 }

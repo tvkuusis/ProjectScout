@@ -4,8 +4,13 @@
 public class ShipVariables : ScriptableObject
 {
     public string prefabName;
-    public int numberOfPrefabsToCreate;
     public float startHealth;
-   
-    
+    public float engineForce;
+    public float engineDashForce;
+    public float dashMaxTime;
+    public float maxVelocity;
+    public float sideThrusterToMainThrusterRatio;
+    public float maxAngularVelocity;
+
+
 }

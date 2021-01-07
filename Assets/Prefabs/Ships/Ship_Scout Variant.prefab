@@ -19,6 +19,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6517387958266961080, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}
+      propertyPath: engineDashForce
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517387958266961080, guid: bc62bc7f2bf1e47b5a26561670696325,
+        type: 3}
       propertyPath: sideThrusterToMainThrusterRatio
       value: 4
       objectReference: {fileID: 0}

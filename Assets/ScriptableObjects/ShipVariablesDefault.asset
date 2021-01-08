@@ -13,5 +13,11 @@ MonoBehaviour:
   m_Name: ShipVariablesDefault
   m_EditorClassIdentifier: 
   prefabName: Default
-  numberOfPrefabsToCreate: 0
   startHealth: 100
+  engineForce: 2000
+  engineDashForce: 4000
+  dashMaxTime: 0.5
+  maxVelocity: 80
+  maxDashVelocity: 500
+  sideThrusterToMainThrusterRatio: 2
+  maxAngularVelocity: 150

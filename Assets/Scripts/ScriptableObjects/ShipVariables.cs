@@ -9,6 +9,7 @@ public class ShipVariables : ScriptableObject
     public float engineDashForce;
     public float dashMaxTime;
     public float maxVelocity;
+    public float maxDashVelocity;
     public float sideThrusterToMainThrusterRatio;
     public float maxAngularVelocity;
 

@@ -20,4 +20,4 @@ MonoBehaviour:
   maxVelocity: 80
   maxDashVelocity: 500
   sideThrusterToMainThrusterRatio: 2
-  maxAngularVelocity: 150
+  maxAngularVelocity: 300

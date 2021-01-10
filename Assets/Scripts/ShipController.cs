@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ShipController : MonoBehaviour
 {
 
     public enum ControlType { Original, BoostedThrusters, BoostedThrustersSpeedScale, RigidBodyRotation }
@@ -24,6 +23,10 @@ public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     bool _leftEngineOn;
     [SerializeField]
     bool _rightEngineOn;
+    [SerializeField]
+    bool _leftReverseEngineOn;
+    [SerializeField]
+    bool _rightReverseEngineOn;
     float _engineForce = 5f;
     float _engineDashForce = 50f;
     float _momentaryForceSpeedRatio = 0f;
@@ -35,9 +38,6 @@ public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     [SerializeField]
     bool _isDashing;
     Vector2 _spawn;
-    Vector2 _touchPosLeft;
-    Vector2 _touchPosRight;
-    
     float _dashTimeStart = 0.0f;
     float _momentaryDashForce = 0f;
     bool _leftButtonDoubleTapped = false;
@@ -241,35 +241,6 @@ public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         }
     }
 
-   
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-
-        _touchPosLeft = eventData.position;
-
-        Debug.Log("beginning drag at: " + _touchPosLeft);
-
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-
-        _touchPosLeft = eventData.position;
-
-        Debug.Log("beginning drag at: " + _touchPosLeft);
-
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-
-        _touchPosLeft = eventData.position;
-
-        Debug.Log("beginning drag at: " + _touchPosLeft);
-
-    }
-
     public void Reset()
     {
         transform.position = _spawn;
@@ -357,7 +328,7 @@ public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
                     {
                         if(RigidBody.angularVelocity > -_maxAngularVelocity)
                         {
-                            RigidBody.AddForceAtPosition(leftEngine.up * (_engineForce + _momentaryDashForceLeft) * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, leftEngine.position);                     
+                            RigidBody.AddForceAtPosition(leftEngine.up * (_engineForce + _momentaryDashForceLeft) * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, leftEngine.position);
                             Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * _engineForce * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, Color.red);
                         }
                     }
@@ -377,6 +348,18 @@ public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
                             RigidBody.AddForceAtPosition(rightEngine.up * (_engineForce + _momentaryDashForce), rightEngine.position);
                             Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * (_engineForce + _momentaryDashForce), Color.red);
                         }
+                    }
+
+                    if(_leftReverseEngineOn)
+                    {
+                        RigidBody.AddForceAtPosition(-1 * leftEngine.up * _engineForce*20, leftEngine.position);
+                        _leftReverseEngineOn = false;
+                    }
+
+                    if(_rightReverseEngineOn)
+                    {
+                        RigidBody.AddForceAtPosition(-1 * leftEngine.up * _engineForce*20, rightEngine.position);
+                        _rightReverseEngineOn = false;
                     }
                     break;
                 case ControlType.RigidBodyRotation:
@@ -406,6 +389,28 @@ public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
             yield return yi;
         }
+    }
+
+    public void SwipeUpLeft()
+    {
+        Debug.Log("Swiped up left!");
+    }
+
+    public void SwipeUpRight()
+    {
+        Debug.Log("Swiped up right!");
+    }
+
+    public void SwipeDownLeft()
+    {
+        _leftReverseEngineOn = true;
+        Debug.Log("Swiped down left!");
+    }
+
+    public void SwipeDownRight()
+    {
+        _rightReverseEngineOn = true;
+        Debug.Log("Swiped down right!");
     }
 
     private void UpdateTurningSpeed()

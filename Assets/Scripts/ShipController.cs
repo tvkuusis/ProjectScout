@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ShipController : MonoBehaviour
+public class ShipController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 
     public enum ControlType { Original, BoostedThrusters, BoostedThrustersSpeedScale, RigidBodyRotation }
@@ -13,7 +14,6 @@ public class ShipController : MonoBehaviour
     public Rigidbody2D RigidBody { get; private set; }
     public Text controlText; // Debug text
     public ShipVariables shipVariables;
-    public float dualTapTimeWindow = 0.2f;
     public float tapTimeWindow = 0.2f;
     [Tooltip("multiplier for thruster forces at minimum speed")]
     public float minForceSpeedRatio = 0.2f; //Min. ratio between max and min speed thrusting, based on ship speed
@@ -35,6 +35,8 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     bool _isDashing;
     Vector2 _spawn;
+    Vector2 _touchPosLeft;
+    Vector2 _touchPosRight;
     
     float _dashTimeStart = 0.0f;
     float _momentaryDashForce = 0f;
@@ -115,7 +117,7 @@ public class ShipController : MonoBehaviour
             _dashTimeStart = Time.time;
             _momentaryDashForce = _engineDashForce;
             _maxVelocity = _maxDashVelocity;
-            //Debug.Log("Dash start time: " + Time.time);
+            Debug.Log("Dash start time: " + Time.time);
         }
 
         //Check when to stop dashing (time-based or button release)
@@ -127,14 +129,16 @@ public class ShipController : MonoBehaviour
                 _maxVelocity = shipVariables.maxVelocity;
                 _leftRightDoubleTapped = false;
                 _momentaryDashForce = 0.0f;
-                //Debug.Log("Dash ending time: " + Time.time);
+                Debug.Log("Dash ending time: " + Time.time);
             }
         }
 
         //Single-thruster dashing, left
-        if(_leftButtonDoubleTapped && !_rightButtonDoubleTapped && !_isDashingLeft)
+        if(_leftButtonDoubleTapped && !_rightButtonDoubleTapped && !_isDashingLeft && !_isDashing)
         {
             _isDashingLeft = true;
+            _isDashingRight = false;
+            _isDashing = false;
             _dashTimeStart = Time.time;
             _momentaryDashForceLeft = _engineDashForce * _sideThrusterToMainThrusterRatio;
             Debug.Log("Dashing left starting time: " + Time.time);
@@ -152,9 +156,11 @@ public class ShipController : MonoBehaviour
         }
 
         //Single-thruster dashing, right
-        if(!_leftButtonDoubleTapped && _rightButtonDoubleTapped && !_isDashingRight)
+        if(!_leftButtonDoubleTapped && _rightButtonDoubleTapped && !_isDashingRight && !_isDashing)
         {
             _isDashingRight = true;
+            _isDashingLeft = false;
+            _isDashing = false;
             _dashTimeStart = Time.time;
             _momentaryDashForceRight = _engineDashForce * _sideThrusterToMainThrusterRatio;
             Debug.Log("Dashing right starting time: " + Time.time);
@@ -233,6 +239,35 @@ public class ShipController : MonoBehaviour
             _rightButtonPressed = false;
             _rightButtonDoubleTapped = false;
         }
+    }
+
+   
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+
+        _touchPosLeft = eventData.position;
+
+        Debug.Log("beginning drag at: " + _touchPosLeft);
+
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+
+        _touchPosLeft = eventData.position;
+
+        Debug.Log("beginning drag at: " + _touchPosLeft);
+
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+
+        _touchPosLeft = eventData.position;
+
+        Debug.Log("beginning drag at: " + _touchPosLeft);
+
     }
 
     public void Reset()

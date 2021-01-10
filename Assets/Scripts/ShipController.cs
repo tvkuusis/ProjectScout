@@ -38,16 +38,20 @@ public class ShipController : MonoBehaviour
     
     float _dashTimeStart = 0.0f;
     float _momentaryDashForce = 0f;
-    bool _leftDoubleTapped = false;
-    bool _rightDoubleTapped = false;
+    bool _leftButtonDoubleTapped = false;
+    bool _rightButtonDoubleTapped = false;
     float _tapTimeLeft = 0.0f;
     float _tapTimeRight = 0.0f;
     float _previousTapTimeLeft = 0.0f;
     float _previousTapTimeRight = 0.0f;
     bool _leftButtonPressed = false;
     bool _rightButtonPressed = false;
-    bool _doubleTapped = false;
+    bool _leftRightDoubleTapped = false;
     float _maxTurnRatioVelocity = 30.0f; //Speed of the ship where maximum turning speed is reached
+    float _momentaryDashForceLeft = 0f;
+    float _momentaryDashForceRight = 0f;
+    bool _isDashingLeft = false;
+    bool _isDashingRight = false;
 
     void Start()
     {
@@ -96,22 +100,22 @@ public class ShipController : MonoBehaviour
             ToggleRightEngine(false);
         }
 
-        //Start of double tapping with L+R buttons
-        if(_leftDoubleTapped && _rightDoubleTapped)
+        //Reckognize double tapping with both L and R buttons
+        if(_leftButtonDoubleTapped && _rightButtonDoubleTapped)
         {
-            _doubleTapped = true;
-            _leftDoubleTapped = false;
-            _rightDoubleTapped = false;
+            _leftRightDoubleTapped = true;
+            _leftButtonDoubleTapped = false;
+            _rightButtonDoubleTapped = false;
         }
 
-        //Check for dashing
-        if(_doubleTapped && !_isDashing)
+        //Double-thruster dash
+        if(_leftRightDoubleTapped && !_isDashing)
         {
             _isDashing = true;
             _dashTimeStart = Time.time;
             _momentaryDashForce = _engineDashForce;
             _maxVelocity = _maxDashVelocity;
-            Debug.Log("Dashing starting time: " + Time.time);
+            //Debug.Log("Dash start time: " + Time.time);
         }
 
         //Check when to stop dashing (time-based or button release)
@@ -121,48 +125,82 @@ public class ShipController : MonoBehaviour
             {
                 _isDashing = false;
                 _maxVelocity = shipVariables.maxVelocity;
-                _doubleTapped = false;
+                _leftRightDoubleTapped = false;
                 _momentaryDashForce = 0.0f;
-                Debug.Log("Dash ending time: " + Time.time);
+                //Debug.Log("Dash ending time: " + Time.time);
             }
-
         }
 
-        //Setting the turning ratio based on ship's speed
-        _momentaryForceSpeedRatio = RigidBody.velocity.magnitude / _maxTurnRatioVelocity;
-        if(_momentaryForceSpeedRatio < minForceSpeedRatio) _momentaryForceSpeedRatio = minForceSpeedRatio;
-        if(_momentaryForceSpeedRatio > maxForceSpeedRatio) _momentaryForceSpeedRatio = maxForceSpeedRatio;
-  
-        Debug.Log("Rigidbody.velocity.y: " + RigidBody.velocity.y);
-        Debug.Log("Rigidbody.velocity.x: " + RigidBody.velocity.x);
-        Debug.Log("Rigidbody.velocity.sqrmagnitude: " + RigidBody.velocity.sqrMagnitude);
+        //Single-thruster dashing, left
+        if(_leftButtonDoubleTapped && !_rightButtonDoubleTapped && !_isDashingLeft)
+        {
+            _isDashingLeft = true;
+            _dashTimeStart = Time.time;
+            _momentaryDashForceLeft = _engineDashForce * _sideThrusterToMainThrusterRatio;
+            Debug.Log("Dashing left starting time: " + Time.time);
+        }
+
+        if(_isDashingLeft)
+        {
+            if(Time.time - _dashTimeStart >= _dashMaxTime || !_leftButtonPressed)
+            {
+                _isDashingLeft = false;
+                _leftButtonDoubleTapped = false;
+                _momentaryDashForceLeft = 0.0f;
+                Debug.Log("Dashing left ending time: " + Time.time);
+            }
+        }
+
+        //Single-thruster dashing, right
+        if(!_leftButtonDoubleTapped && _rightButtonDoubleTapped && !_isDashingRight)
+        {
+            _isDashingRight = true;
+            _dashTimeStart = Time.time;
+            _momentaryDashForceRight = _engineDashForce * _sideThrusterToMainThrusterRatio;
+            Debug.Log("Dashing right starting time: " + Time.time);
+        }
+
+        if(_isDashingRight)
+        {
+            if(Time.time - _dashTimeStart >= _dashMaxTime || !_rightButtonPressed)
+            {
+                _isDashingRight = false;
+                _rightButtonDoubleTapped = false;
+                _momentaryDashForceRight = 0.0f;
+                Debug.Log("Dashing right ending time: " + Time.time);
+            }
+        }
     }
 
     public void ToggleLeftEngine(bool newState)
     {
         _leftEngineOn = newState;
 
-        //Check for double-tap
+        //Left button is pressed
         if(newState == true)
         {
+            //NOTE: remove the if condition if speed-based turning is wanted to affect to all control types - Lauri
+            if(currentControlType == ControlType.BoostedThrustersSpeedScale) UpdateTurningSpeed();
+
             _leftButtonPressed = true;
             _tapTimeLeft = Time.time;
 
+            //Check for double - tap
             if(_tapTimeLeft - _previousTapTimeLeft <= tapTimeWindow)
             {
-                _leftDoubleTapped = true;
+                _leftButtonDoubleTapped = true;
                 Debug.Log("Left doubletapped!");
             }
             else
             {
-                _leftDoubleTapped = false;
+                _leftButtonDoubleTapped = false;
                 _previousTapTimeLeft = _tapTimeLeft;
             }
         }
         else
         {
             _leftButtonPressed = false;
-            _leftDoubleTapped = false;
+            _leftButtonDoubleTapped = false;
         }
     }
 
@@ -173,24 +211,27 @@ public class ShipController : MonoBehaviour
         //Check for double-tap
         if(newState == true)
         {
+            //NOTE: remove the if condition if speed-based turning is wanted to affect to all control types - Lauri
+            if(currentControlType == ControlType.BoostedThrustersSpeedScale) UpdateTurningSpeed();
+
             _rightButtonPressed = true;
             _tapTimeRight = Time.time;
 
             if(_tapTimeRight - _previousTapTimeRight <= tapTimeWindow)
             {
-                _rightDoubleTapped = true;
+                _rightButtonDoubleTapped = true;
                 Debug.Log("Right doubletapped!");
             }
             else
             {
-                _rightDoubleTapped = false;
+                _rightButtonDoubleTapped = false;
                 _previousTapTimeRight = _tapTimeRight;
             }
         }
         else
         {
             _rightButtonPressed = false;
-            _rightDoubleTapped = false;
+            _rightButtonDoubleTapped = false;
         }
     }
 
@@ -281,7 +322,7 @@ public class ShipController : MonoBehaviour
                     {
                         if(RigidBody.angularVelocity > -_maxAngularVelocity)
                         {
-                            RigidBody.AddForceAtPosition(leftEngine.up * _engineForce * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, leftEngine.position);
+                            RigidBody.AddForceAtPosition(leftEngine.up * (_engineForce + _momentaryDashForceLeft) * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, leftEngine.position);                     
                             Debug.DrawLine(leftEngine.position, leftEngine.position + leftEngine.up * _engineForce * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, Color.red);
                         }
                     }
@@ -289,7 +330,7 @@ public class ShipController : MonoBehaviour
                     {
                         if(RigidBody.angularVelocity < _maxAngularVelocity)
                         {
-                            RigidBody.AddForceAtPosition(rightEngine.up * _engineForce * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, rightEngine.position);
+                            RigidBody.AddForceAtPosition(rightEngine.up * (_engineForce + _momentaryDashForceRight) * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, rightEngine.position);
                             Debug.DrawLine(rightEngine.position, rightEngine.position + rightEngine.up * _engineForce * _sideThrusterToMainThrusterRatio * _momentaryForceSpeedRatio, Color.green);
                         }
                     }
@@ -330,6 +371,14 @@ public class ShipController : MonoBehaviour
 
             yield return yi;
         }
+    }
+
+    private void UpdateTurningSpeed()
+    {
+        //Update the thruster's turning speed based on ship's speed
+        _momentaryForceSpeedRatio = RigidBody.velocity.magnitude / _maxTurnRatioVelocity;
+        if(_momentaryForceSpeedRatio < minForceSpeedRatio) _momentaryForceSpeedRatio = minForceSpeedRatio;
+        if(_momentaryForceSpeedRatio > maxForceSpeedRatio) _momentaryForceSpeedRatio = maxForceSpeedRatio;
     }
 
     private void OnDrawGizmos()

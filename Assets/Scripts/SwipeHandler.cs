@@ -12,6 +12,7 @@ public class SwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     Vector2 _touchPosStart;
     Vector2 _touchPosEnd;
+    float _touchTimeStart;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class SwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
 
         _touchPosStart = eventData.position;
+        _touchTimeStart = Time.time;
 
         Debug.Log("beginning swipe at: " + _touchPosStart);
 
@@ -44,6 +46,7 @@ public class SwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
 
         _touchPosEnd = eventData.position;
+        float touchTime = Time.time - _touchTimeStart;
 
         Debug.Log("end swipe at: " + _touchPosEnd);
 

@@ -37,7 +37,7 @@ public class ShipController : MonoBehaviour
     float _maxAngularVelocity = 10f;
     [SerializeField]
     bool _isDashing;
-    Vector2 _spawn;
+    Vector3 _spawn;
     float _dashTimeStart = 0.0f;
     float _momentaryDashForce = 0f;
     bool _leftButtonDoubleTapped = false;

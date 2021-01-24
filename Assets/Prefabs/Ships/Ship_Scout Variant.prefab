@@ -106,6 +106,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9999999, y: 0.99999994}
   m_EdgeRadius: 0
+--- !u!114 &899597177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814234898981835308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88ecbd83008d49f2a14856fc82aaf2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipVariables: {fileID: 11400000, guid: 17f29febc486348ba968a6b0dd7f1862, type: 2}
+--- !u!114 &899597183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814234898981835308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49f64972a5b84d1d88a5cb997dd796f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camSizeMaxSpeed: 30
+  camSizeZeroSpeed: 10
+  camSizeStart: 35
 --- !u!1 &1908451381788771692
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,34 +166,6 @@ Transform:
   m_Father: {fileID: 4814234898981835305}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &899597177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814234898981835308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a88ecbd83008d49f2a14856fc82aaf2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipVariables: {fileID: 11400000, guid: 17f29febc486348ba968a6b0dd7f1862, type: 2}
---- !u!114 &899597183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814234898981835308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f49f64972a5b84d1d88a5cb997dd796f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camSizeMaxSpeed: 30
-  camSizeZeroSpeed: 10
-  camSizeStart: 35
 --- !u!1 &5991764551768825328
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +328,7 @@ PrefabInstance:
     - target: {fileID: 6517387958266961083, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 91.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6517387958266961083, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}
@@ -368,7 +368,7 @@ PrefabInstance:
     - target: {fileID: 6517387958266961086, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}
       propertyPath: m_Name
-      value: Ship_Scout
+      value: Ship_Scout Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6517387958266961087, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}

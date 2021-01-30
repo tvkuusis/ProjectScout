@@ -321,10 +321,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120360b4cd34542e58502c7edb312b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Painting1: {fileID: 0}
-  Painting2: {fileID: 0}
-  Painting3: {fileID: 0}
-  Painting4: {fileID: 0}
+  PaintingArray:
+  - {fileID: 9092564941295960898}
+  - {fileID: 9092564941254695096}
+  - {fileID: 9092564941873663769}
+  - {fileID: 9092564941341963258}
 --- !u!1 &9092564941873663769
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,9 +35,9 @@ public class PaintingController : MonoBehaviour
 
     public void SetOpacity(float opacity)
     {
-        Color tmp = PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color;
-        tmp.a = opacity * 255;
-        PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;
+        Debug.Log("SetOpacity to: " + opacity);
+
+        StartCoroutine(LerpOpacityCoroutine(opacity));
 
         if(opacity <= 0)
         {
@@ -46,5 +46,24 @@ public class PaintingController : MonoBehaviour
         }
 
     }
+
+    private IEnumerator LerpOpacityCoroutine(float opacity)
+    {
+
+        Color tmp = PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color;
+        //tmp.a = opacity;
+        //PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;
+
+        float timeNow = Time.time;
+
+        while(Time.time - timeNow <= 1f)
+        {
+            tmp.a = Mathf.Lerp(tmp.a, opacity, Time.time - timeNow);
+            PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;
+            yield return null;
+
+        }
+    }
+
 
 }

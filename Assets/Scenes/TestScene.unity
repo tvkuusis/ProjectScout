@@ -518,31 +518,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 471788008818762583, guid: 78be04e68bc944de5ae155b48144990b,
-        type: 3}
-      propertyPath: PaintingArray.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 471788008818762583, guid: 78be04e68bc944de5ae155b48144990b,
-        type: 3}
-      propertyPath: PaintingArray.Array.data[0]
-      value: 
-      objectReference: {fileID: 1599533240}
-    - target: {fileID: 471788008818762583, guid: 78be04e68bc944de5ae155b48144990b,
-        type: 3}
-      propertyPath: PaintingArray.Array.data[1]
-      value: 
-      objectReference: {fileID: 1599533239}
-    - target: {fileID: 471788008818762583, guid: 78be04e68bc944de5ae155b48144990b,
-        type: 3}
-      propertyPath: PaintingArray.Array.data[2]
-      value: 
-      objectReference: {fileID: 1599533238}
-    - target: {fileID: 471788008818762583, guid: 78be04e68bc944de5ae155b48144990b,
-        type: 3}
-      propertyPath: PaintingArray.Array.data[3]
-      value: 
-      objectReference: {fileID: 1599533237}
     - target: {fileID: 9092564940432226250, guid: 78be04e68bc944de5ae155b48144990b,
         type: 3}
       propertyPath: m_RootOrder
@@ -605,30 +580,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78be04e68bc944de5ae155b48144990b, type: 3}
---- !u!1 &1599533237 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9092564941341963258, guid: 78be04e68bc944de5ae155b48144990b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1599533236}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1599533238 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9092564941873663769, guid: 78be04e68bc944de5ae155b48144990b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1599533236}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1599533239 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9092564941254695096, guid: 78be04e68bc944de5ae155b48144990b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1599533236}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1599533240 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9092564941295960898, guid: 78be04e68bc944de5ae155b48144990b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1599533236}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4814234898710030284
 PrefabInstance:
   m_ObjectHideFlags: 0

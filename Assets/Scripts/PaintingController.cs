@@ -39,12 +39,6 @@ public class PaintingController : MonoBehaviour
 
         StartCoroutine(LerpOpacityCoroutine(opacity));
 
-        if(opacity <= 0)
-        {
-            _currentPainting++;
-            if(_currentPainting > PaintingArray.Length) _currentPainting = PaintingArray.Length;
-        }
-
     }
 
     private IEnumerator LerpOpacityCoroutine(float opacity)
@@ -62,6 +56,12 @@ public class PaintingController : MonoBehaviour
             PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;
             yield return null;
 
+        }
+
+        if(opacity <= 0)
+        {
+            _currentPainting++;
+            if(_currentPainting > PaintingArray.Length) _currentPainting = PaintingArray.Length;
         }
     }
 

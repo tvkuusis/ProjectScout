@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7321682712657981800
 Transform:
   m_ObjectHideFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25729835714917310}
   m_LocalRotation: {x: 0, y: 0, z: -0.41548717, w: 0.90959907}
-  m_LocalPosition: {x: 0.203, y: 0.4, z: 0}
+  m_LocalPosition: {x: 0.203, y: 0.4, z: 1}
   m_LocalScale: {x: -0.22, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7301044860248881674}
@@ -106,6 +106,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9999999, y: 0.99999994}
   m_EdgeRadius: 0
+--- !u!1 &1908451381788771692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7301044860248881674}
+  m_Layer: 0
+  m_Name: Hull
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7301044860248881674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908451381788771692}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4934345013339021578}
+  - {fileID: 7321682712657981800}
+  m_Father: {fileID: 4814234898981835305}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &899597177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,38 +166,6 @@ MonoBehaviour:
   camSizeMaxSpeed: 30
   camSizeZeroSpeed: 10
   camSizeStart: 35
---- !u!1 &1908451381788771692
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7301044860248881674}
-  m_Layer: 0
-  m_Name: Hull
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7301044860248881674
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908451381788771692}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4934345013339021578}
-  - {fileID: 7321682712657981800}
-  m_Father: {fileID: 4814234898981835305}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5991764551768825328
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4934345013339021578
 Transform:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5991764551768825328}
   m_LocalRotation: {x: 0, y: 0, z: 0.41548708, w: 0.90959907}
-  m_LocalPosition: {x: -0.203, y: 0.4, z: 0}
+  m_LocalPosition: {x: -0.203, y: 0.4, z: 1}
   m_LocalScale: {x: 0.22, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7301044860248881674}
@@ -279,6 +279,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6517387958048265452, guid: bc62bc7f2bf1e47b5a26561670696325,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517387958126705142, guid: bc62bc7f2bf1e47b5a26561670696325,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6517387958266961080, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}
       propertyPath: engineForce
@@ -368,7 +378,7 @@ PrefabInstance:
     - target: {fileID: 6517387958266961086, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}
       propertyPath: m_Name
-      value: Ship_Scout Variant
+      value: Ship_Scout
       objectReference: {fileID: 0}
     - target: {fileID: 6517387958266961087, guid: bc62bc7f2bf1e47b5a26561670696325,
         type: 3}

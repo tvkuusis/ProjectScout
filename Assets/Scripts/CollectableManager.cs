@@ -29,6 +29,16 @@ public class CollectableManager : MonoBehaviour
         SpawnNewCollectables();
     }
 
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.C))
+        {
+            _currentCollectables[0].GetComponent<Animator>().SetTrigger("Collect");
+        }
+#endif
+    }
+
     public void SpawnNewCollectables()
     {
         for(int i = 0; i < collectablesPerCanves; ++i)

@@ -60,7 +60,7 @@ public class CollectableManager : MonoBehaviour
         float opacity = (float)_currentCollectables.Count / (float)collectablesPerCanves;
         PaintingController.Instance.SetOpacity(opacity);
 
-        if(_currentCollectables.Count == 0)
+        if(_currentCollectables.Count == 0 && PaintingController.Instance.IsLastLevel() == false)
         {
             SpawnNewCollectables();
         }

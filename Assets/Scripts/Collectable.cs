@@ -14,17 +14,20 @@ public class Collectable : MonoBehaviour
 
     void Update()
     {
-        
+        if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.C))
+        {
+            _ac.SetTrigger("Collect");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.LogError(gameObject.name + " collided with " + other.gameObject.name);
         _ac.SetTrigger("Collect");
     }
 
     public void OnCollect()
     {
+        CollectableManager.Instance.OnCollectableGained(this);
         gameObject.SetActive(false);
     }
 }

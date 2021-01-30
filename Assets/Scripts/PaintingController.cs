@@ -6,6 +6,7 @@ public class PaintingController : MonoBehaviour
 {
 
     public GameObject[] PaintingArray;
+    public float opacityLerpTime = 1.0f;
 
     //public GameObject Painting2;
     //public GameObject Painting3;
@@ -43,7 +44,7 @@ public class PaintingController : MonoBehaviour
 
     public bool IsLastLevel()
     {
-        if(_currentPainting > PaintingArray.Length - 1) return true;
+        if(_currentPainting >= PaintingArray.Length - 1) return true;
 
         return false;
     }
@@ -52,12 +53,9 @@ public class PaintingController : MonoBehaviour
     {
 
         Color tmp = PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color;
-        //tmp.a = opacity;
-        //PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;
-
         float timeNow = Time.time;
 
-        while(Time.time - timeNow <= 1f)
+        while(Time.time - timeNow <= opacityLerpTime)
         {
             tmp.a = Mathf.Lerp(tmp.a, opacity, Time.time - timeNow);
             PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;

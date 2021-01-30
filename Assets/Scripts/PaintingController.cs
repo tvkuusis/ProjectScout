@@ -18,7 +18,7 @@ public class PaintingController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(Instance = null)
+        if(Instance == null)
         {
             Instance = this;
         }
@@ -36,8 +36,14 @@ public class PaintingController : MonoBehaviour
     public void SetOpacity(float opacity)
     {
         Color tmp = PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color;
-        tmp.a = opacity;
+        tmp.a = opacity * 255;
         PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;
+
+        if(opacity <= 0)
+        {
+            _currentPainting++;
+            if(_currentPainting > PaintingArray.Length) _currentPainting = PaintingArray.Length;
+        }
 
     }
 

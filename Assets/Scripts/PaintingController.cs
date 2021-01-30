@@ -11,11 +11,18 @@ public class PaintingController : MonoBehaviour
     //public GameObject Painting3;
     //public GameObject Painting4;
 
+    public static PaintingController Instance;
+
     private int _currentPainting;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(Instance = null)
+        {
+            Instance = this;
+        }
+
         _currentPainting = 0;
     }
 

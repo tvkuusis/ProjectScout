@@ -41,6 +41,13 @@ public class PaintingController : MonoBehaviour
 
     }
 
+    public bool IsLastLevel()
+    {
+        if(_currentPainting > PaintingArray.Length - 1) return true;
+
+        return false;
+    }
+
     private IEnumerator LerpOpacityCoroutine(float opacity)
     {
 
@@ -61,7 +68,7 @@ public class PaintingController : MonoBehaviour
         if(opacity <= 0)
         {
             _currentPainting++;
-            if(_currentPainting > PaintingArray.Length) _currentPainting = PaintingArray.Length;
+            if(_currentPainting > PaintingArray.Length - 1) _currentPainting = PaintingArray.Length - 1;
         }
     }
 

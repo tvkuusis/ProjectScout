@@ -44,8 +44,11 @@ public class CollectableManager : MonoBehaviour
         {
             _currentCollectables.Remove(c);
             Destroy(c.gameObject);
-            Debug.LogError("Collectable gained. Left: " + _currentCollectables.Count + " / 10");
+            Debug.Log("Collectable gained. Left: " + _currentCollectables.Count + " / 10");
         }
+
+        int opacity = Mathf.RoundToInt((float)_currentCollectables.Count / (float)collectablesPerCanves * 100);
+        PaintingController.Instance.SetOpacity(opacity);
 
         if(_currentCollectables.Count == 0)
         {

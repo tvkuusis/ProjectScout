@@ -5,17 +5,18 @@ using UnityEngine;
 public class PaintingController : MonoBehaviour
 {
 
-    public Sprite Painting1;
-    public Sprite Painting2;
-    public Sprite Painting3;
-    public Sprite Painting4;
+    public GameObject[] PaintingArray;
 
-    private int _paintingStage = 1;
+    //public GameObject Painting2;
+    //public GameObject Painting3;
+    //public GameObject Painting4;
+
+    private int _currentPainting;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _currentPainting = 0;
     }
 
     // Update is called once per frame
@@ -23,4 +24,14 @@ public class PaintingController : MonoBehaviour
     {
         
     }
+
+
+    public void SetOpacity(float opacity)
+    {
+        Color tmp = PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color;
+        tmp.a = opacity;
+        PaintingArray[_currentPainting].GetComponent<SpriteRenderer>().color = tmp;
+
+    }
+
 }

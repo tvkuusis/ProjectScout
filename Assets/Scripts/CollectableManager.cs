@@ -43,7 +43,7 @@ public class CollectableManager : MonoBehaviour
     {
         for(int i = 0; i < collectablesPerCanves; ++i)
         {
-            Collectable c = Instantiate(collectablePrefab, new Vector3(Random.Range(minPosition.position.x, maxPosition.position.x), Random.Range(minPosition.position.y, maxPosition.position.y), 1), Quaternion.identity).GetComponent<Collectable>();
+            Collectable c = Instantiate(collectablePrefab, new Vector3(Random.Range(minPosition.position.x, maxPosition.position.x), Random.Range(minPosition.position.y, maxPosition.position.y), 1), Quaternion.identity, transform).GetComponent<Collectable>();
             _currentCollectables.Add(c);
         }
     }
